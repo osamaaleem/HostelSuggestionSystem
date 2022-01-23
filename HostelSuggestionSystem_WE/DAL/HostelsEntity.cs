@@ -80,16 +80,20 @@ namespace HostelSuggestionSystem_WE.DAL
         }
         public int AddHostels(Hostels hostels)
         {
-            DataSet ds = new DataSet();
-            query = "SELECT * FROM Hostels";
+            int count = 0;
+            query = $"INSERT INTO Hostels VALUES('{hostels.HostelName}','{hostels.HostelAddress}','{hostels.HostelCity}','{hostels.HostelDistance}','{hostels.HostelRating}','{hostels.HostelImageUrl}')";
             cmd = new SqlCommand(query, connection);
-            adapter = new SqlDataAdapter(cmd);
-            adapter.Fill(ds, "Hostels");
-            builder = new SqlCommandBuilder(adapter);
-            DataTable dt = ds.Tables["Hostels"];
-            DataRow dr = dt.NewRow();
-            dt.Rows.Add(dr);
-            return adapter.Update(dt);
+            connection.Open();
+            try
+            {
+                count = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                count = 0;
+            }
+            connection.Close();
+            return count;
         }
         public int UpdateHostel(Hostels hostel)
         {

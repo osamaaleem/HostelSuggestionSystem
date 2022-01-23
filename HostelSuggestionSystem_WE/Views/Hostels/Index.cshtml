@@ -8,15 +8,12 @@
 }
 
 <h2>Hostels</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
+<hr />
 <section class="white-section" id="pricing">
 
     <h2 class="section-heading">Find a home away from home</h2>
     <p>Simple and affordable Hostel Rooms for you and your friends.</p>
-
+    <hr />
     <div class="row">
         @foreach (var item in Model)
         {
@@ -31,11 +28,13 @@
                         <p>@item.HostelAddress</p>
                         <p>Ratings <b>@item.HostelRating</b></p>
                         <p>Distance from city center <b>@item.HostelDistance</b></p>
-                        @Html.ActionLink("Details", "Details", "Hostel", new { id = item.HostelId }, new { @class = "btn btn-primary", @role = "button" })
+                        @Html.ActionLink("Details", "HostelDetails", "Hostels", new { id = item.HostelId }, new { @class = "btn btn-primary", @role = "button" })
                     </div>
                 </div>
             </div>
         }
     </div>
-
+    <p>
+        @Html.ActionLink("Create New", "Create")
+    </p>
 </section>

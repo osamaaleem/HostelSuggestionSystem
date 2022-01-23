@@ -6,7 +6,12 @@ body {
 p {
     color: #000f !important;
 }
-
+td{
+    padding: 10px !important;
+}
+th{
+    padding: 10px !important;
+}
 /* Headings */
 
 .big-heading {

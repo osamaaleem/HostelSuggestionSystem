@@ -1,0 +1,85 @@
+﻿@model HostelSuggestionSystem_WE.Models.Hostels
+
+@{
+    ViewBag.Title = "HostelDetails";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>HostelDetails</h2>
+
+<div>
+    <h4>Hostels</h4>
+    <hr />
+    <table>
+        <thead>
+            <tr>
+                <th colspan="2">Details</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <dl class="dl-horizontal">
+                        <dt>
+                            @Html.DisplayNameFor(model => model.HostelId)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.HostelId)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.HostelName)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.HostelName)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.HostelAddress)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.HostelAddress)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.HostelCity)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.HostelCity)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.HostelDistance)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.HostelDistance)
+                        </dd>
+
+                        <dt>
+                            @Html.DisplayNameFor(model => model.HostelRating)
+                        </dt>
+
+                        <dd>
+                            @Html.DisplayFor(model => model.HostelRating)
+                        </dd>
+
+                    </dl>
+                </td>
+                <td colspan="1"></td>
+                <td colspan="2">
+                    <img src="@Url.Content("~/Images/" + Model.HostelImageUrl)" height="200px" width="300px" />
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<p>
+    @Html.ActionLink("Edit", "UpdateHostel", new {  Id = Model.HostelId }) |
+    @Html.ActionLink("Back to List", "Index", new { @class = "btn btn-primary", @role = "button" })
+</p>
