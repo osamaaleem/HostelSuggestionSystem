@@ -3,8 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
+    <title>@ViewBag.Title - Hostel Suggestion System</title>
+    
+    <link rel="stylesheet" href="~/Content/css">
+    <link rel="stylesheet" href="~/Content/Sytles.css">
+    
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
@@ -16,14 +19,19 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Hostel Management System", "Index", "Hostels", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("Login", "Login", "User")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
                 </ul>
+                @Html.BeginForm("Search", "Hostel", FormMethod.Post, new { @class = "form-inline navbar-right" })
+                {
+                   @Html.TextBox("searchItem", "Search", new { @class = "form-control mr-sm-2" })
+                   <input class="btn btn-outline-success my-2 my-sm-0" type="submit" />
+                }
             </div>
         </div>
     </div>
@@ -31,7 +39,10 @@
         @RenderBody()
         <hr />
         <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
+            <div class="container-fluid">
+                <p>Made with️ ❤️ in RWP © @DateTime.Now.Year OSAMA ALEEM </p>
+            </div>
+            
         </footer>
     </div>
 

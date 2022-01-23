@@ -22,17 +22,17 @@ namespace HostelSuggestionSystem_WE.DAL
         private SqlCommand cmd;
         private SqlDataAdapter adapter;
         private SqlCommandBuilder builder;
-        public DataTable GetHostels()
+        public List<Hostels> GetHostels()
         {
             DataSet ds = new DataSet();
             query = "SELECT * FROM Hostels";
             cmd = new SqlCommand(query, connection);
             adapter = new SqlDataAdapter(cmd);
             adapter.Fill(ds,"Hostels");
-            builder = new SqlCommandBuilder(adapter);
-            return ds.Tables["Hostels"];
+            
+            return RoomsList(ds.Tables["Hostels"]);
         }
-        public DataTable GetHostelsByFilter(string filter, string filterBody)
+        public List<Hostels> GetHostelsByFilter(string filter, string filterBody)
         {
             DataSet ds = new DataSet();
             switch (filter)
@@ -44,7 +44,10 @@ namespace HostelSuggestionSystem_WE.DAL
                     query = "SELECT * FROM Hostels ORDER BY HostelRating DSC";
                     break;
                 case "City":
-                    query = $"SELCT * FROM Hostels WHERE HostelCity LIKE '{filterBody}'";
+                    query = $"SELCT * FROM Hostels WHERE HostelCity LIKE '%{filterBody}%'";
+                    break;
+                case "Name":
+                    query = $"SELECT * FROM Hostels WHERE HostelName like '%{filterBody}%'";
                     break;
                 default:
                     ds = null;
@@ -62,14 +65,28 @@ namespace HostelSuggestionSystem_WE.DAL
             }
             if (ds != null)
             {
-                return ds.Tables["Hostels"];
+                return RoomsList(ds.Tables["Hostels"]);
             }
             return GetHostels();
         }
+        public List<Hostels> GetHostelsById(Int64 id)
+        {
+            DataSet ds = new DataSet();
+            query = $"SELECT * FROM Hostels WHERE HostelId = '{id}'";
+            cmd = new SqlCommand(query, connection);
+            adapter = new SqlDataAdapter(cmd);
+            adapter.Fill(ds, "Hostels");
+            return RoomsList(ds.Tables["Hostels"]);
+        }
         public int AddHostels(Hostels hostels)
         {
-            DataTable dt = new DataTable();
-            dt = GetHostels();
+            DataSet ds = new DataSet();
+            query = "SELECT * FROM Hostels";
+            cmd = new SqlCommand(query, connection);
+            adapter = new SqlDataAdapter(cmd);
+            adapter.Fill(ds, "Hostels");
+            builder = new SqlCommandBuilder(adapter);
+            DataTable dt = ds.Tables["Hostels"];
             DataRow dr = dt.NewRow();
             dt.Rows.Add(dr);
             return adapter.Update(dt);
@@ -97,6 +114,24 @@ namespace HostelSuggestionSystem_WE.DAL
             }
             connection.Close();
             return rowsAffected;
+        }
+        public List<Hostels> RoomsList(DataTable dt)
+        {
+            List<Hostels> list = new List<Hostels>();
+            foreach (DataRow dr in dt.Rows)
+            {
+                list.Add(new Hostels
+                {
+                    HostelId = Convert.ToInt64(dr["HostelId"]),
+                    HostelName = dr["HostelName"].ToString(),
+                    HostelAddress = dr["HostelAddress"].ToString(),
+                    HostelCity = dr["HostelCity"].ToString(),
+                    HostelRating = Convert.ToDouble(dr["HostelRating"]),
+                    HostelDistance = Convert.ToDouble(dr["HostelDistance"]),
+                    HostelImageUrl = dr["HostelImageUrl"].ToString()
+                });
+            }
+            return list;
         }
     }
 }

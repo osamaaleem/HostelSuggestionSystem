@@ -145,6 +145,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Styles.css" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -179,9 +180,11 @@
     <Content Include="Views\Shared\_MainLayout.cshtml" />
     <Content Include="Views\Hostels\Index.cshtml" />
     <Content Include="Views\User\SignUp.cshtml" />
+    <Content Include="Views\Hostels\AddHostel.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Images\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

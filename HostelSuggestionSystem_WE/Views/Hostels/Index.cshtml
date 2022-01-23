@@ -1,70 +1,41 @@
 ﻿@model IEnumerable<HostelSuggestionSystem_WE.Models.Hostels>
 
 @{
-    ViewBag.Title = "Index";
-    Layout = "~/Views/Shared/_MainLayout.cshtml";
+    ViewBag.Title = "Hostels";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/Styles.css")
 }
 
-<h2>Index</h2>
+<h2>Hostels</h2>
 
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.HostelId)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HostelName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HostelAddress)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HostelCity)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HostelDistance)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HostelRating)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.HostelImageUrl)
-        </th>
-        <th></th>
-    </tr>
+<section class="white-section" id="pricing">
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.HostelId)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HostelName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HostelAddress)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HostelCity)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HostelDistance)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HostelRating)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.HostelImageUrl)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-        </td>
-    </tr>
-}
+    <h2 class="section-heading">Find a home away from home</h2>
+    <p>Simple and affordable Hostel Rooms for you and your friends.</p>
 
-</table>
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="pricing-column col-lg-4 col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>@item.HostelName</h3>
+                    </div>
+                    <div class="card-body">
+                        <h2 class="price-text"><img src="~/Images/@item.HostelImageUrl" class="img-responsive" /></h2>
+                        <h4 style="color: black !important">@item.HostelCity</h4>
+                        <p>@item.HostelAddress</p>
+                        <p>Ratings <b>@item.HostelRating</b></p>
+                        <p>Distance from city center <b>@item.HostelDistance</b></p>
+                        @Html.ActionLink("Details", "Details", "Hostel", new { id = item.HostelId }, new { @class = "btn btn-primary", @role = "button" })
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+</section>
