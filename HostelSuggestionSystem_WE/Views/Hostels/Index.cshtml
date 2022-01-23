@@ -1,0 +1,70 @@
+﻿@model IEnumerable<HostelSuggestionSystem_WE.Models.Hostels>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_MainLayout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.HostelId)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HostelName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HostelAddress)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HostelCity)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HostelDistance)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HostelRating)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.HostelImageUrl)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.HostelId)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HostelName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HostelAddress)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HostelCity)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HostelDistance)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HostelRating)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.HostelImageUrl)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+        </td>
+    </tr>
+}
+
+</table>
