@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     @Styles.Render("~/Content/css")
     @Styles.Render("~/Content/Styles.css")
+    HttpCookie cookie = Request.Cookies["UserData"];
 }
 
 <h2>Hostels</h2>
@@ -14,27 +15,41 @@
     <h2 class="section-heading">Find a home away from home</h2>
     <p>Simple and affordable Hostel Rooms for you and your friends.</p>
     <hr />
+    @if(cookie["UserName"] != "-1")
+    {
+       <h4>Signed In as @cookie["UserName"]</h4>
+    }
     <div class="row">
         @foreach (var item in Model)
         {
-            <div class="pricing-column col-lg-4 col-md-6">
+            <div class="pricing-column col-lg-3 col-md-3">
                 <div class="card">
                     <div class="card-header">
                         <h3>@item.HostelName</h3>
                     </div>
                     <div class="card-body">
-                        <h2 class="price-text"><img src="~/Images/@item.HostelImageUrl" class="img-responsive" /></h2>
+                        <h2 class="price-text"><img src="~/Images/@item.HostelImageUrl" class="img-responsive" style="width: 2500%; height: 937.5%"; /></h2>
                         <h4 style="color: black !important">@item.HostelCity</h4>
                         <p>@item.HostelAddress</p>
                         <p>Ratings <b>@item.HostelRating</b></p>
                         <p>Distance from city center <b>@item.HostelDistance</b></p>
                         @Html.ActionLink("Details", "HostelDetails", "Hostels", new { id = item.HostelId }, new { @class = "btn btn-primary", @role = "button" })
+                        @if (cookie["UserName"] != "-1")
+                        {
+                            @Html.ActionLink("Modify", "UpdateHostel", "Hostels", new { id = item.HostelId }, new { @class = "btn btn-primary", @role = "button" })
+
+                            
+                        }
+                        @if (cookie["UserName"] != "-1")
+                        {
+                            
+                            @Html.ActionLink("Delete", "DeleteHostel", "Hostels", new { id = item.HostelId }, new { @class = "btn btn-primary", @role = "button" })
+                        }
+
                     </div>
                 </div>
             </div>
         }
     </div>
-    <p>
-        @Html.ActionLink("Create New", "Create")
-    </p>
+
 </section>

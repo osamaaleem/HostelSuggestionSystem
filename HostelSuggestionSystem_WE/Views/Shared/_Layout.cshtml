@@ -26,12 +26,25 @@
                     <li>@Html.ActionLink("Login", "Login", "User")</li>
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Order By <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="@Url.Action("Index","Hostels",new {filterBy = "Rating"})">Ratings</a></li>
+                            <li><a href="@Url.Action("Index","Hostels",new {filterBy = "Distance"})">Distance From City Center</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        @Html.BeginForm("Index", "Hostels", FormMethod.Get, new { @class = "form-inline navbar-right" })
+                        {
+                            @Html.TextBox("search", "Search", new { @class = "form-control mr-sm-2" })
+                            <input class="btn btn-outline-success my-2 my-sm-0" type="submit" />
+                        }
+                    </li>
                 </ul>
-                @Html.BeginForm("Search", "Hostel", FormMethod.Post, new { @class = "form-inline navbar-right" })
-                {
-                   @Html.TextBox("searchItem", "Search", new { @class = "form-control mr-sm-2" })
-                   <input class="btn btn-outline-success my-2 my-sm-0" type="submit" />
-                }
+                
+                
             </div>
         </div>
     </div>
@@ -39,10 +52,13 @@
         @RenderBody()
         <hr />
         <footer>
+            <p>
+                @Html.ActionLink("Create New", "AddHostel","Hostels")
+            </p>
             <div class="container-fluid">
                 <p>Made with️ ❤️ in RWP © @DateTime.Now.Year OSAMA ALEEM </p>
             </div>
-            
+
         </footer>
     </div>
 

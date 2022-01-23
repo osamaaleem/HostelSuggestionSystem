@@ -41,13 +41,13 @@ namespace HostelSuggestionSystem_WE.DAL
                     query = "SELECT * FROM Hostels ORDER BY HostelDistance ASC";
                     break;
                 case "Rating":
-                    query = "SELECT * FROM Hostels ORDER BY HostelRating DSC";
+                    query = "SELECT * FROM Hostels ORDER BY HostelRating DESC";
                     break;
                 case "City":
-                    query = $"SELCT * FROM Hostels WHERE HostelCity LIKE '%{filterBody}%'";
+                    query = $"SELECT * FROM Hostels WHERE HostelCity LIKE '%{filterBody}%'";
                     break;
                 case "Name":
-                    query = $"SELECT * FROM Hostels WHERE HostelName like '%{filterBody}%'";
+                    query = $"SELECT * FROM Hostels WHERE HostelName like '%{filterBody}%' OR HostelCity like '%{filterBody}%'";
                     break;
                 default:
                     ds = null;
@@ -57,7 +57,7 @@ namespace HostelSuggestionSystem_WE.DAL
             {
                 cmd = new SqlCommand(query, connection);
                 adapter = new SqlDataAdapter(cmd);
-                adapter.Fill(ds);
+                adapter.Fill(ds,"Hostels");
             }
             catch (Exception ex)
             {
@@ -98,7 +98,7 @@ namespace HostelSuggestionSystem_WE.DAL
         public int UpdateHostel(Hostels hostel)
         {
             int rowsAffected = 0;
-            query = $"UPDATE Hostels SET" +
+            query = $"UPDATE Hostels SET " +
                 $"HostelName = '{hostel.HostelName}', " +
                 $"HostelAddress = '{hostel.HostelAddress}', " +
                 $"HostelCity = '{hostel.HostelCity}', " +
@@ -122,20 +122,45 @@ namespace HostelSuggestionSystem_WE.DAL
         public List<Hostels> RoomsList(DataTable dt)
         {
             List<Hostels> list = new List<Hostels>();
-            foreach (DataRow dr in dt.Rows)
+            try
             {
-                list.Add(new Hostels
+                foreach (DataRow dr in dt.Rows)
                 {
-                    HostelId = Convert.ToInt64(dr["HostelId"]),
-                    HostelName = dr["HostelName"].ToString(),
-                    HostelAddress = dr["HostelAddress"].ToString(),
-                    HostelCity = dr["HostelCity"].ToString(),
-                    HostelRating = Convert.ToDouble(dr["HostelRating"]),
-                    HostelDistance = Convert.ToDouble(dr["HostelDistance"]),
-                    HostelImageUrl = dr["HostelImageUrl"].ToString()
-                });
+                    list.Add(new Hostels
+                    {
+                        HostelId = Convert.ToInt64(dr["HostelId"]),
+                        HostelName = dr["HostelName"].ToString(),
+                        HostelAddress = dr["HostelAddress"].ToString(),
+                        HostelCity = dr["HostelCity"].ToString(),
+                        HostelRating = Convert.ToDouble(dr["HostelRating"]),
+                        HostelDistance = Convert.ToDouble(dr["HostelDistance"]),
+                        HostelImageUrl = dr["HostelImageUrl"].ToString()
+                    });
+                }
             }
+            catch (Exception ex)
+            {
+                list = GetHostels();
+            }
+            
             return list;
+        }
+        public int DeleteHostel(Int64 id)
+        {
+            int rowsAffected = 0;
+            query = $"DELETE FROM Hostels WHERE HostelId = '{id}'";
+            connection.Open();
+            cmd = new SqlCommand(query, connection);
+            try
+            {
+                rowsAffected = cmd.ExecuteNonQuery();
+            }
+            catch (Exception ex)
+            {
+                rowsAffected = 0;
+            }
+            connection.Close();
+            return rowsAffected;
         }
     }
 }

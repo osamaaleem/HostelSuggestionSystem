@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Web;
 using System.Web.Mvc;
 
 namespace HostelSuggestionSystem_WE.Controllers
@@ -11,19 +12,33 @@ namespace HostelSuggestionSystem_WE.Controllers
     public class HostelsController : Controller
     {
         // GET: Hostels
-        public ActionResult Index(String search)
+        public ActionResult Index(String search,string filterBy)
         {
+            HttpCookie cookie = new HttpCookie("UserData");
+            cookie["UserName"] = "-1";
+            if (Session["login"] != null)
+            {
+                Users user = new Users();
+                user.UserName = Session["login"].ToString();
+                cookie["UserName"] = user.UserName;
+                cookie["LoginData"] = DateTime.Now.ToString();
+            }
             HostelsEntity hostelsEntity = new HostelsEntity();
             List<Hostels> hostels = new List<Hostels>();
             if (search != null)
             {
                 hostels = hostelsEntity.GetHostelsByFilter("Name", search);
             }
+            else if(filterBy != null)
+            {
+                hostels = hostelsEntity.GetHostelsByFilter(filterBy,null);
+            }
             else
             {
                 hostels = hostelsEntity.GetHostels();
             }
-            
+            Response.Cookies.Add(cookie);
+            cookie.Expires = DateTime.Now.AddYears(1);
             return View(hostels);
         }
         public ActionResult AddHostel()
@@ -118,9 +133,12 @@ namespace HostelSuggestionSystem_WE.Controllers
             hostels = list[0];
             return View(hostels);
         }
-        public ActionResult Search()
+        public ActionResult DeleteHostel(Int64 Id)
         {
-
+            HostelsEntity entity = new HostelsEntity();
+            entity.DeleteHostel(Id);
+            return RedirectToAction("Index");
         }
     }
+    
 }

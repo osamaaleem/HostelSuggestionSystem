@@ -18,12 +18,12 @@ namespace HostelSuggestionSystem_WE.Controllers
         [HttpPost]
         public ActionResult Login(Users user)
         {
-            if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 UsersEntity entity = new UsersEntity();
                 if (entity.IsValidUser(user))
                 {
-                    Session["login"] = user;
+                    Session["login"] = user.UserName;
                     return RedirectToAction("Index", "Hostels");
                 }
                 else
@@ -33,12 +33,12 @@ namespace HostelSuggestionSystem_WE.Controllers
             }
             return View(user);
         }
-        public ActionResult Register()
+        public ActionResult SignUp()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult Register(Users user)
+        public ActionResult SignUp(Users user)
         {
             if (ModelState.IsValid)
             {
@@ -49,4 +49,10 @@ namespace HostelSuggestionSystem_WE.Controllers
             }
             return View(user);
         }
+        public ActionResult SignOut()
+        {
+            Session["login"] = null;
+            return RedirectToAction("Index","Hostels");
+        }
+    }
 }
