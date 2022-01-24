@@ -52,6 +52,7 @@ namespace HostelSuggestionSystem_WE.Controllers
         public ActionResult SignOut()
         {
             Session["login"] = null;
+            
             return RedirectToAction("Index","Hostels");
         }
     }
