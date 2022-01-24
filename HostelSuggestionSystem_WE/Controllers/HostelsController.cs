@@ -38,7 +38,7 @@ namespace HostelSuggestionSystem_WE.Controllers
                 hostels = hostelsEntity.GetHostels();
             }
             Response.Cookies.Add(cookie);
-            cookie.Expires = DateTime.Now.AddYears(1);
+           // cookie.Expires = DateTime.Now.AddYears(1);
             return View(hostels);
         }
         public ActionResult AddHostel()
